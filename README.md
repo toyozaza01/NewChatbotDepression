@@ -14,4 +14,4 @@ cp env.txt change it to .env
 ## Running a Streamlit
 ```sh
 streamlit run app.py
-``
+
