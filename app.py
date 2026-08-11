@@ -6,6 +6,7 @@ import streamlit as st
 import google.generativeai as genai
 from typing import List, Tuple, Dict, Any
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
+from dotenv import load_dotenv
 
 # ---------- PAGE CONFIG ----------
 st.set_page_config(page_title="ปลอบใจ (Chatbot)", page_icon="🙋‍♀️", layout="centered")
@@ -22,9 +23,12 @@ except Exception:
     )
 
 # ---------- API KEY ----------
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "AIzaSyDZnQReJi1TI5PCE6owFmB0w3uemCqplsM")
+load_dotenv()
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", os.getenv("GEMINI_API_TOKEN"))
 if not GOOGLE_API_KEY:
-    st.error("ไม่พบ GOOGLE_API_KEY ใน Environment/Secrets"); st.stop()
+    st.error("ไม่พบ GOOGLE_API_KEY ใน Environment/Secrets")
+    st.stop()
+
 genai.configure(api_key=GOOGLE_API_KEY)
 
 # ---------- GEMINI CONFIG ----------
@@ -42,7 +46,7 @@ SAFETY_SETTINGS = {
     HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
 }
 model = genai.GenerativeModel(
-    model_name="gemini-2.0-flash",
+    model_name="gemini-3.5-flash",
     safety_settings=SAFETY_SETTINGS,
     generation_config=generation_config,
     system_instruction=PROMPT_WORKAW,
