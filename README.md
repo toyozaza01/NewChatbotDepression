@@ -1,3 +1,1 @@
 # DepressionChatbot
-# NewChatbotDepression
-# NewChatbotDepression
